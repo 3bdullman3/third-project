@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توقيت الصلاة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+}
+
+/* General styles */
+body {
+    background:linear-gradient(#3a1702 , #9c5401) ;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Page header styles */
+#city-name {
+    text-align: center;
+    color: #fff;
+}
+
+#city-name h1 {
+    font-size: 48px;
+    font-weight: 400;
+}
+
+#city-name h6 {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid #a04b06;
+    margin: 20px auto;
+    width: 50%;
+}
+
+/* Cards container styles */
+.cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Card styles */
+.card {
+    width: calc(33.33% - 20px);
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card .header {
+    background: linear-gradient(45deg, rgb(90, 49, 1), rgb(207, 118, 15));
+    text-align: center;
+    border-radius: 15px 15px 0 0;
+    padding: 10px;
+}
+
+.card .header h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.card .body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.card .time {
+    font-size: 48px;
+    color: #333;
+}
+
+/* Select styles */
+select {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    margin-top: 20px;
+}
+
+select:focus {
+    border-color: #a04b06;
+}
+
+    </style>
+    <div class="container">
+        <div id="city-name">
+            <h1 id="city">الرياض</h1>
+            <h6 id="date">الخميس 13 فبراير 2003</h6>
+            <hr>
+        </div>
+
+        <div class="cards-container">
+            <!-- بطاقات -->
+            <div class="card">
+                <div class="header">
+                    <h1>الفجر</h1>
+                </div>
+                <div class="body">
+                    <h1 class="time" id="s1">4:30</h1>
+                </div>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <h1>الشروق</h1>
+                </div>
+                <div class="body">
+                    <h1 class="time" id="s2">6:00</h1>
+                </div>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <h1>الظهر</h1>
+                </div>
+                <div class="body">
+                    <h1 class="time" id="s3">12:30</h1>
+                </div>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <h1>العصر</h1>
+                </div>
+                <div class="body">
+                    <h1 class="time" id="s4">3:30</h1>
+                </div>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <h1>المغرب</h1>
+                </div>
+                <div class="body">
+                    <h1 class="time" id="s5">6:30</h1>
+                </div>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <h1>العشاء</h1>
+                </div>
+                <div class="body">
+                    <h1 class="time" id="s6">7:30</h1>
+                </div>
+            </div>
+            <!-- نهاية البطاقات -->
+        </div>
+        <div>
+            <select name="cities-select" id="cities-select"></select>
+        </div>
+    </div>
+</body>
+<script src="/node_modules/axios/dist/axios.min.js">
+
+</script>
+
+<script>
+    let cities = [
+        {
+            arabicname: "الرياض",
+            name : "Ar Riyāḑ"
+        },
+        
+        {
+            arabicname: "القصيم",
+            name : "Al Qaşīm"
+        },
+        
+        {    
+            arabicname: "مكة",
+            name : "Makkah al Mukarramah"
+        },
+        {  
+            arabicname: "المدينة",
+            name : "Al Madīnah al Munawwarah",
+        }
+    ]
+    for(Sity of cities){
+
+        const content = `
+        <option> |${Sity.arabicname}</option>
+        `
+        document.getElementById("cities-select").innerHTML += content;
+    }
+    let = document.getElementById("cities-select").addEventListener("change",function(){
+        //tihs اذا كنت داخل الايفينت ليسنسر نفسة وتبغى تطبع نفس الي انت جالس تعدل علية فالايفينت يمديك تختصرها ب
+        let cityname = ""
+        for(let city of cities ){
+            if(city.arabicname =this.value ){
+                cityname = city.name
+            }
+        }
+        getTimeOfCity(cityname)
+    })
+    function getTimeOfCity(cityname){
+        let p = {
+        country : "SA",
+        city: cityname
+    }
+axios.get('http://api.aladhan.com/v1/timingsByCity', {
+    params: p
+  })
+  .then(function (response) {
+
+    const timing = response.data.data.timings;
+    //timing
+    timeforpray("s1", timing.Fajr);
+    timeforpray("s2", timing.Sunrise);
+    timeforpray("s3", timing.Dhuhr);
+    timeforpray("s4", timing.Asr);  
+    timeforpray("s5", timing.Maghrib);
+    timeforpray("s6", timing.Isha);
+        
+    //date
+    const readDate = response.data.data.date.readable;
+    const weekDay = response.data.data.date.hijri.weekday.ar;
+    const date = readDate +" "+ weekDay ;
+    ReadDate("date",readDate)
+    document.getElementById("date").innerHTML = date;
+
+  })
+  .catch(function (error) {
+    console.log(" هنااااااك خطا  "+error);
+  }) 
+    }
+    getTimeOfCity()
+  function timeforpray(id, time) {
+    document.getElementById(id).innerHTML = time;
+}
+function ReadDate(id, date) {
+    document.getElementById(id).innerHTML = date;
+}
+</script>
+</html>
